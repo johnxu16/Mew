@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "mew",
+  "appid": "testAppId",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
