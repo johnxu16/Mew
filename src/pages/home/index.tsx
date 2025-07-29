@@ -1,11 +1,13 @@
 import Taro from '@tarojs/taro'
 import { useEffect } from 'react'
-import { AtButton } from 'taro-ui'
+import Component from './swipeable-card-list'
 
 function Home() {
+  test()
+
   return (
     <div>
-      <AtButton>home</AtButton>
+      {/* <Component /> */}
     </div>
   )
 }

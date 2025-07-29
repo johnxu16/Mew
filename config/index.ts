@@ -1,4 +1,5 @@
 import type { Plugin } from 'vite'
+import path from 'node:path'
 import process from 'node:process'
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
 import tailwindcss from 'tailwindcss'
@@ -32,6 +33,7 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
     },
     framework: 'react',
     compiler: {
+      // /**
       type: 'vite',
       vitePlugins: [
         {
@@ -52,7 +54,16 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
           // 由于 taro vite 默认会移除所有的 tailwindcss css 变量，所以一定要开启这个配置，进行css 变量的重新注入
           injectAdditionalCssVarScope: true,
         }),
+        // {
+        //   name: 'polyfill',
+        // }
+
       ] as Plugin[], // 从 vite 引入 type, 为了智能提示
+      //  */
+      // type: 'webpack5',
+      prebundle: {
+        enable: false,
+      },
     },
     mini: {
       postcss: {
@@ -69,6 +80,13 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
             generateScopedName: '[name]__[local]___[hash:base64:5]',
           },
         },
+      },
+      webpackChain(chain, webpack) {
+        chain.plugin('qm-polyfill').use(webpack.ProvidePlugin, [{
+          test: () => { console.log('test') },
+          queueMicrotask: [path.resolve(__dirname, 'polyfill.ts'), 'default'],
+        }])
+        // chain.resolve.plugin('tsconfig-paths').use(TsconfigPathsPlugin)
       },
     },
     h5: {
@@ -95,7 +113,7 @@ export default defineConfig<'vite'>(async (merge, { command, mode }) => {
       },
     },
     rn: {
-      appName: 'taroDemo',
+      appName: 'mew',
       postcss: {
         cssModules: {
           enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true

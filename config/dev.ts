@@ -1,7 +1,7 @@
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
-  plugins: ['@tarojs/plugin-react-devtools'],
+  plugins: [],
   mini: {
     // debugReact: true,
   },
